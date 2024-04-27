@@ -7,11 +7,20 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "db:generate": "drizzle-kit generate:pg --config=drizzle.config.ts",
+    "db:push": "drizzle-kit push:pg --config=drizzle.config.ts"
   },
   "dependencies": {
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
+    "drizzle-orm": "^0.29.4",
     "nuxt": "^3.11.2",
+    "postgres": "^3.4.4",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.5",
+    "drizzle-kit": "^0.20.17"
   }
 }
