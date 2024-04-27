@@ -1,0 +1,11 @@
+services:
+  nuxt-temp-dev-db:
+    container_name: nuxt-temp-dev-db
+    image: postgres:16
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123
+    volumes:
+      - .docker/setup.sql:/docker-entrypoint-initdb.d/setup.sql
