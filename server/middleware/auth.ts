@@ -30,8 +30,6 @@ export default defineEventHandler(async (event) => {
 
   const { session, user } = await lucia.validateSession(sessionId);
 
-  console.log({ session, user });
-
   if (session && session.fresh) {
     appendHeader(
       event,
