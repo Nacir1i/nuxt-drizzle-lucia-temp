@@ -4,17 +4,19 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
-    "dev:docker": "pnpm docker:restart && pnpm dev -o",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "dev": "nuxt dev",
+    "dev:docker": "pnpm docker:restart && pnpm dev -o",
+    "docker:rm": "docker compose rm nuxt-temp-dev-db -s -f -v",
+    "docker:up": "docker compose up nuxt-temp-dev-db -d",
+    "docker:restart": "pnpm docker:rm && pnpm docker:up && pnpm db:generate",
     "db:generate": "drizzle-kit generate:pg --config=drizzle.config.ts",
     "db:studio": "pnpm drizzle-kit studio",
     "db:push": "drizzle-kit push:pg --config=drizzle.config.ts",
-    "docker:rm": "docker compose rm nuxt-temp-dev-db -s -f -v",
-    "docker:up": "docker compose up nuxt-temp-dev-db -d",
-    "docker:restart": "pnpm docker:rm && pnpm docker:up && pnpm db:generate"
+    "docker:dev": "docker compose up nuxt-temp-dev --build --force-recreate --always-recreate-deps --remove-orphans -V",
+    "docker:dev:watch": "docker compose up nuxt-temp-dev --build --watch --force-recreate --always-recreate-deps --remove-orphans -V"
   },
   "dependencies": {
     "@lucia-auth/adapter-drizzle": "^1.0.7",
