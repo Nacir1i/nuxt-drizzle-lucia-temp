@@ -1,5 +1,8 @@
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import { drizzle } from 'drizzle-orm/postgres-js'
+import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
+import { userTable } from '../db/schema/user';
+import { sessionTable } from '../db/schema/session';
 
 import postgres from 'postgres'
 
@@ -20,4 +23,10 @@ export function useDatabase() {
   db = drizzle(sql)
 
   return db
+}
+
+export function useDrizzleAdapter() {
+  const db = useDatabase();
+
+  return new DrizzlePostgreSQLAdapter(db, sessionTable, userTable);
 }
