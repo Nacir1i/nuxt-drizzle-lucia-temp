@@ -5,17 +5,24 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "dev:docker": "pnpm docker:restart && pnpm dev -o",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "db:generate": "drizzle-kit generate:pg --config=drizzle.config.ts",
-    "db:push": "drizzle-kit push:pg --config=drizzle.config.ts"
+    "db:studio": "pnpm drizzle-kit studio",
+    "db:push": "drizzle-kit push:pg --config=drizzle.config.ts",
+    "docker:rm": "docker compose rm nuxt-temp-dev-db -s -f -v",
+    "docker:up": "docker compose up nuxt-temp-dev-db -d",
+    "docker:restart": "pnpm docker:rm && pnpm docker:up && pnpm db:generate"
   },
   "dependencies": {
     "@lucia-auth/adapter-drizzle": "^1.0.7",
     "arctic": "^1.7.0",
     "drizzle-orm": "^0.29.4",
+    "lucia": "^3.2.0",
     "nuxt": "^3.11.2",
+    "pg": "^8.11.5",
     "postgres": "^3.4.4",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
