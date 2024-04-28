@@ -9,3 +9,71 @@ services:
       POSTGRES_PASSWORD: 123
     volumes:
       - .docker/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+
+  nuxt-temp-dev:
+    build: 
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    container_name: nuxt-temp-dev
+    command: pnpm dev -o
+    image: nuxt-temp-dev
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - nuxt-temp-dev-db
+    develop:
+      watch:
+        - action: sync
+          path: ./public
+          target: ./public/index.html
+        - action: sync
+          path: ./assets
+          target: ./app/assets/
+        - action: sync
+          path: ./components
+          target: ./app/components
+        - action: sync
+          path: ./composables
+          target: ./app/composables
+        - action: sync
+          path: ./content
+          target: ./app/content
+        - action: sync
+          path: ./layouts
+          target: ./app/layouts
+        - action: sync
+          path: ./middleware
+          target: ./app/middleware
+        - action: sync
+          path: ./modules
+          target: ./app/modules
+        - action: sync
+          path: ./pages
+          target: ./app/pages
+        - action: sync
+          path: ./plugins
+          target: ./app/app/plugins
+        - action: sync
+          path: ./public
+          target: ./app/public
+        - action: sync
+          path: ./server
+          target: ./app/server
+        - action: sync
+          path: ./utils
+          target: ./app/utils
+        - action: rebuild
+          path: nuxt.config.ts
+        - action: rebuild
+          path: package.json
+
+  nuxt-temp:
+    build: 
+      context: .
+      dockerfile: ./docker/Dockerfile
+    container_name: nuxt-temp
+    image: nuxt-temp
+    restart: always
+    ports:
+      - "5000:80"
